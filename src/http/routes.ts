@@ -6,6 +6,7 @@ import { updateClient, updateClientBodySchema } from "./controllers/client/updat
 import { deleteClient, deleteClientBodySchema } from "./controllers/client/delete-client/delete-client";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from 'zod'
+import { getImage, uploadImage } from "./controllers/client/upload-image/upload-image";
 
 export async function appRoutes(app: FastifyInstance) {
 
@@ -123,4 +124,41 @@ export async function appRoutes(app: FastifyInstance) {
                 }
             },
         }, deleteClient)
+
+
+    app.withTypeProvider<ZodTypeProvider>().post(
+        '/client/upload/:id',
+        {
+            schema: {
+                tags: ['Clients'],
+                summary: 'Upload a client Image',
+                response: {
+                    200: z.object({
+                        id: z.string(),
+                        name: z.string(),
+                        email: z.string().email(),
+                        phone: z.string().nullish(),
+                        image: z.string().nullish(),
+                        createdAt: z.date(),
+                        updatedAt: z.date(),
+                        deleted: z.boolean().nullable(),
+                    })
+                }
+            },
+        }, uploadImage)
+
+
+    app.withTypeProvider<ZodTypeProvider>().get(
+        '/client/image/:id',
+        {
+            schema: {
+                tags: ['Clients'],
+                summary: 'Get a client Image',
+                response: {
+                    200: z.object({
+                        imageBuffer: z.instanceof(Buffer)
+                    })
+                }
+            },
+        }, getImage)
 }

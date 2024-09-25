@@ -13,9 +13,18 @@ export class PrismaClientsRepository implements ClientsRepository {
 
         const clients = await prisma.client.findMany({
             where: query ? {
-                name: {
-                    contains: query,
-                }
+                OR: [
+                    {
+                        name: {
+                            contains: query,
+                        }
+                    },
+                    {
+                        email: {
+                            contains: query,
+                        }
+                    }
+                ]
             } : {
             },
             take: 10,
@@ -27,9 +36,18 @@ export class PrismaClientsRepository implements ClientsRepository {
 
         const total = await prisma.client.count({
             where: query ? {
-                name: {
-                    contains: query,
-                }
+                OR: [
+                    {
+                        name: {
+                            contains: query,
+                        }
+                    },
+                    {
+                        email: {
+                            contains: query,
+                        }
+                    }
+                ]
             } : {
             }
         });

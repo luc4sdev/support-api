@@ -15,6 +15,5 @@ export async function getAllClients(req: FastifyRequest, reply: FastifyReply) {
     const getClient = makeGetAllClientsUseCase()
 
     const clients = await getClient.execute({ query, pageIndex })
-    console.log(clients)
     return reply.status(200).send(clients)
 }

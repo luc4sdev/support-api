@@ -6,12 +6,14 @@ import { ZodTypeProvider, jsonSchemaTransform, serializerCompiler, validatorComp
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyCors from "@fastify/cors";
+import fastifyMultipart from '@fastify/multipart';
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
+app.register(fastifyMultipart);
 app.register(fastifySwagger, {
     openapi: {
         info: {
