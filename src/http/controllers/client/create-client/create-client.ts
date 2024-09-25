@@ -3,25 +3,17 @@ import { makeCreateClientUseCase } from '@/use-cases/factories/client/make-creat
 import { z } from "zod"
 import { ClientAlreadyExistsError } from '@/use-cases/errors/client-already-exists-error';
 
-const AddressSchema = z.object({
-    street: z.string(),
-    number: z.string(),
-    cep: z.string(),
-    neighborhood: z.string(),
-    city: z.string(),
-});
 
 export const createClientBodySchema = z.object({
     name: z.string(),
-    type: z.enum(['FISICA', 'JURIDICA']),
-    document: z.string(),
-    birthDate: z.string(),
-    address: AddressSchema
+    email: z.string().email(),
+    phone: z.string().nullish(),
+    image: z.string().nullish(),
 })
 
 export async function createClient(request: FastifyRequest, reply: FastifyReply) {
 
-    const { name, type, document, birthDate, address } = createClientBodySchema.parse(request.body)
+    const { name, email, phone, image } = createClientBodySchema.parse(request.body)
 
 
     try {
@@ -29,7 +21,7 @@ export async function createClient(request: FastifyRequest, reply: FastifyReply)
         const createClientUseCase = makeCreateClientUseCase()
 
 
-        const data = await createClientUseCase.execute({ name, type, document, birthDate, address })
+        const data = await createClientUseCase.execute({ name, email, phone, image })
 
         return reply.status(201).send(data.client)
 

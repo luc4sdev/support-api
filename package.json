@@ -7,7 +7,6 @@
     "postinstall": "npm run prisma:generate",
     "dev": "tsx watch src/server.ts",
     "start": "node build/server.js",
-    "elastic": "tsx src/lib/create-index.ts",
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "build": "tsup src --out-dir build",

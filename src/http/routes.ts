@@ -22,15 +22,12 @@ export async function appRoutes(app: FastifyInstance) {
                     201: z.object({
                         id: z.string(),
                         name: z.string(),
-                        type: z.enum(['FISICA', 'JURIDICA']),
-                        document: z.string(),
-                        birthDate: z.string(),
-                        active: z.boolean().nullable(),
+                        email: z.string().email(),
+                        phone: z.string().nullish(),
+                        image: z.string().nullish(),
                         createdAt: z.date(),
                         updatedAt: z.date(),
                         deleted: z.boolean().nullable(),
-                        addressId: z.string(),
-                        routerId: z.string().nullable(),
                     })
                 }
             },
@@ -46,15 +43,12 @@ export async function appRoutes(app: FastifyInstance) {
                     200: z.array(z.object({
                         id: z.string(),
                         name: z.string(),
-                        type: z.enum(['FISICA', 'JURIDICA']),
-                        document: z.string(),
-                        birthDate: z.string(),
-                        active: z.boolean().nullable(),
+                        email: z.string().email(),
+                        phone: z.string().nullish(),
+                        image: z.string().nullish(),
                         createdAt: z.date(),
                         updatedAt: z.date(),
                         deleted: z.boolean().nullable(),
-                        addressId: z.string(),
-                        routerId: z.string().nullable(),
                     }))
 
                 }
@@ -71,15 +65,12 @@ export async function appRoutes(app: FastifyInstance) {
                     200: z.object({
                         id: z.string(),
                         name: z.string(),
-                        type: z.enum(['FISICA', 'JURIDICA']),
-                        document: z.string(),
-                        birthDate: z.string(),
-                        active: z.boolean().nullable(),
+                        email: z.string().email(),
+                        phone: z.string().nullish(),
+                        image: z.string().nullish(),
                         createdAt: z.date(),
                         updatedAt: z.date(),
                         deleted: z.boolean().nullable(),
-                        addressId: z.string(),
-                        routerId: z.string().nullable(),
                     })
                 }
             },
@@ -97,15 +88,12 @@ export async function appRoutes(app: FastifyInstance) {
                     200: z.object({
                         id: z.string(),
                         name: z.string(),
-                        type: z.enum(['FISICA', 'JURIDICA']),
-                        document: z.string(),
-                        birthDate: z.string(),
-                        active: z.boolean().nullable(),
+                        email: z.string().email(),
+                        phone: z.string().nullish(),
+                        image: z.string().nullish(),
                         createdAt: z.date(),
                         updatedAt: z.date(),
                         deleted: z.boolean().nullable(),
-                        addressId: z.string(),
-                        routerId: z.string().nullable(),
                     })
                 }
             },
@@ -122,15 +110,12 @@ export async function appRoutes(app: FastifyInstance) {
                     200: z.object({
                         id: z.string(),
                         name: z.string(),
-                        type: z.enum(['FISICA', 'JURIDICA']),
-                        document: z.string(),
-                        birthDate: z.string(),
-                        active: z.boolean().nullable(),
+                        email: z.string().email(),
+                        phone: z.string().nullish(),
+                        image: z.string().nullish(),
                         createdAt: z.date(),
                         updatedAt: z.date(),
                         deleted: z.boolean().nullable(),
-                        addressId: z.string(),
-                        routerId: z.string().nullable(),
                     })
                 }
             },

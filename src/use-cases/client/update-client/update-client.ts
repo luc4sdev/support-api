@@ -3,17 +3,10 @@ import { Client } from "@prisma/client";
 
 export interface UpdateClientUseCaseRequest {
     id: string
-    name?: string
-    type?: "FISICA" | "JURIDICA"
-    document?: string
-    birthDate?: string
-    address?: {
-        street?: string;
-        number?: string;
-        cep?: string;
-        neighborhood?: string;
-        city?: string;
-    }
+    name?: string;
+    email?: string;
+    phone?: string | null;
+    image?: string | null;
 }
 
 interface UpdateClientUseCaseResponse {
@@ -24,10 +17,10 @@ export class UpdateClientUseCase {
 
     constructor(private clientsRepository: ClientsRepository) { }
 
-    async execute({ id, name, type, document, birthDate, address }: UpdateClientUseCaseRequest): Promise<UpdateClientUseCaseResponse> {
+    async execute({ id, name, email, phone, image }: UpdateClientUseCaseRequest): Promise<UpdateClientUseCaseResponse> {
 
 
-        const client = await this.clientsRepository.update({ id, name, type, document, birthDate, address })
+        const client = await this.clientsRepository.update({ id, name, email, phone, image })
 
         return {
             client

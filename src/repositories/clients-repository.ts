@@ -6,7 +6,7 @@ import { Client } from "@prisma/client";
 export interface ClientsRepository {
     findMany(): Promise<Client[] | null>
     findById(id: string): Promise<Client | null>
-    findByDocument(document: string): Promise<Client | null>
+    findByEmail(document: string): Promise<Client | null>
     create(data: CreateClientUseCaseRequest): Promise<Client>
     update(data: UpdateClientUseCaseRequest): Promise<Client>
     delete(data: DeleteClientUseCaseRequest): Promise<Client>

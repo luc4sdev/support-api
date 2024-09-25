@@ -3,17 +3,10 @@ import { ClientAlreadyExistsError } from "@/use-cases/errors/client-already-exis
 import { Client } from "@prisma/client";
 
 export interface CreateClientUseCaseRequest {
-    name: string
-    type: "FISICA" | "JURIDICA"
-    document: string
-    birthDate: string
-    address: {
-        street: string;
-        number: string;
-        cep: string;
-        neighborhood: string;
-        city: string;
-    }
+    name: string;
+    email: string;
+    phone?: string | null;
+    image?: string | null;
 }
 
 interface CreateClientUseCaseResponse {
@@ -24,15 +17,15 @@ export class CreateClientUseCase {
 
     constructor(private clientsRepository: ClientsRepository) { }
 
-    async execute({ name, type, document, birthDate, address }: CreateClientUseCaseRequest): Promise<CreateClientUseCaseResponse> {
+    async execute({ name, email, phone, image }: CreateClientUseCaseRequest): Promise<CreateClientUseCaseResponse> {
 
-        const clientWithSameDocument = await this.clientsRepository.findByDocument(document)
+        const clientWithSameDocument = await this.clientsRepository.findByEmail(email)
 
         if (clientWithSameDocument) {
             throw new ClientAlreadyExistsError()
         }
 
-        const client = await this.clientsRepository.create({ name, type, document, birthDate, address })
+        const client = await this.clientsRepository.create({ name, email, phone, image })
 
         return {
             client
