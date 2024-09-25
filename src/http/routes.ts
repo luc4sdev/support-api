@@ -40,16 +40,19 @@ export async function appRoutes(app: FastifyInstance) {
                 tags: ['Clients'],
                 summary: 'Get all clients',
                 response: {
-                    200: z.array(z.object({
-                        id: z.string(),
-                        name: z.string(),
-                        email: z.string().email(),
-                        phone: z.string().nullish(),
-                        image: z.string().nullish(),
-                        createdAt: z.date(),
-                        updatedAt: z.date(),
-                        deleted: z.boolean().nullable(),
-                    }))
+                    200: z.object({
+                        data: z.array(z.object({
+                            id: z.string(),
+                            name: z.string(),
+                            email: z.string().email(),
+                            phone: z.string().nullish(),
+                            image: z.string().nullish(),
+                            createdAt: z.date(),
+                            updatedAt: z.date(),
+                            deleted: z.boolean().nullable(),
+                        })),
+                        total: z.number()
+                    })
 
                 }
             },

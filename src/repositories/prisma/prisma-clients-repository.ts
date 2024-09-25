@@ -4,20 +4,37 @@ import { ClientsRepository } from "../clients-repository";
 import { CreateClientUseCaseRequest } from "@/use-cases/client/create-client/create-client";
 import { UpdateClientUseCaseRequest } from "@/use-cases/client/update-client/update-client";
 import { DeleteClientUseCaseRequest } from "@/use-cases/client/delete-client/delete-client";
+import { GetAllClientsUseCaseRequest } from "@/use-cases/client/get-all-clients/get-all-clients";
 
 export class PrismaClientsRepository implements ClientsRepository {
 
-    async findMany(): Promise<Client[] | null> {
+    async findMany({ query, pageIndex }: GetAllClientsUseCaseRequest): Promise<{ data: Client[], total: number } | null> {
+
+
         const clients = await prisma.client.findMany({
-            where: {
-                deleted: false
+            where: query ? {
+                name: {
+                    contains: query,
+                }
+            } : {
             },
+            take: 10,
+            skip: pageIndex * 10,
             orderBy: {
-                createdAt: 'asc'
+                createdAt: "desc",
             }
         })
 
-        return clients
+        const total = await prisma.client.count({
+            where: query ? {
+                name: {
+                    contains: query,
+                }
+            } : {
+            }
+        });
+
+        return { data: clients, total };
     }
 
     async findById(id: string): Promise<Client | null> {
