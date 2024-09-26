@@ -7,6 +7,7 @@ export interface UpdateClientUseCaseRequest {
     email?: string;
     phone?: string | null;
     image?: string | null;
+    imageData?: Buffer | null;
 }
 
 interface UpdateClientUseCaseResponse {

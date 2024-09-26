@@ -13,7 +13,11 @@ export const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
-app.register(fastifyMultipart);
+app.register(fastifyMultipart, {
+    limits: {
+        fileSize: 10 * 1024 * 1024
+    }
+});
 app.register(fastifySwagger, {
     openapi: {
         info: {

@@ -26,10 +26,10 @@ export async function uploadImage(request: FastifyRequest, reply: FastifyReply) 
         if (data && data.file) {
             const extension = path.extname(data.filename)
             const baseName = path.basename(data.filename, extension)
-            const file = data.file
+            const buffer = await data.toBuffer()
 
             const uploadImage = makeUploadImageUseCase();
-            const clientData = await uploadImage.execute({ id, baseName, extension, file });
+            const clientData = await uploadImage.execute({ id, baseName, extension, buffer });
 
             return reply.status(200).send(clientData.client);
 
@@ -48,15 +48,16 @@ export async function getImage(request: FastifyRequest, reply: FastifyReply) {
     const { id } = getImageSchema.parse(request.params);
 
     try {
-
         const getImage = makeGetImageUseCase();
         const imageBuffer = await getImage.execute({ id });
 
         if (imageBuffer) {
-            reply.status(200).type('image/png').send(imageBuffer);
+            const base64String = imageBuffer.toString('base64');
+            const dataUrl = `data:image/png;base64,${base64String}`;
 
+            reply.status(200).send(dataUrl);
         } else {
-            reply.status(404).send('Logo not found');
+            reply.status(404).send('Image not found');
         }
 
     } catch (err) {
@@ -64,3 +65,4 @@ export async function getImage(request: FastifyRequest, reply: FastifyReply) {
         return reply.status(500).send({ message: 'Internal Server Error' });
     }
 }
+
