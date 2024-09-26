@@ -24,7 +24,7 @@ export class GetImageUseCase {
 
         const imageName = client?.image;
 
-        const imageDirectory = env.IMAGE_DIRECTORY || path.join(__dirname, '../../../../tmp/');
+        const imageDirectory = path.join(__dirname, '/tmp/');
 
 
         const imagePath = path.join(imageDirectory, imageName as string);
