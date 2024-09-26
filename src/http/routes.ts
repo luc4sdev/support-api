@@ -7,6 +7,7 @@ import { deleteClient, deleteClientBodySchema } from "./controllers/client/delet
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from 'zod'
 import { getImage, uploadImage } from "./controllers/client/upload-image/upload-image";
+import { ApiController } from "./controllers/api/api";
 
 export async function appRoutes(app: FastifyInstance) {
 
@@ -161,4 +162,63 @@ export async function appRoutes(app: FastifyInstance) {
                 }
             },
         }, getImage)
+
+
+    app.withTypeProvider<ZodTypeProvider>().post(
+        '/authenticate',
+        {
+            schema: {
+                tags: ['Auth'],
+                summary: 'Authenticate',
+                body: z.object({
+                    email: z.string().email(),
+                    password: z.string(),
+                }),
+                response: {
+                    200: z.object({
+                        token: z.string(),
+                        user: z.object({
+                            id: z.string(),
+                            name: z.string(),
+                            email: z.string().email(),
+                            password: z.string(),
+                            createdAt: z.date(),
+                            updatedAt: z.date(),
+                        })
+
+                    })
+                }
+            },
+        }, ApiController.authenticate)
+
+
+    app.withTypeProvider<ZodTypeProvider>().post(
+        '/validate-token',
+        {
+            schema: {
+                tags: ['Auth'],
+                summary: 'Validate Token',
+                body: z.object({
+                    token: z.string(),
+                }),
+                response: {
+                    200: z.object({
+                        id: z.string(),
+                        name: z.string(),
+                        email: z.string().email(),
+                    })
+                }
+            },
+        }, ApiController.validateToken)
+
+
+
+    app.withTypeProvider<ZodTypeProvider>().post(
+        '/destroy',
+        {
+            schema: {
+                tags: ['Auth'],
+                summary: 'Destroy Token',
+            },
+        }, ApiController.destroy)
 }

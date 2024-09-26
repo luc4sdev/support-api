@@ -7,6 +7,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyCors from "@fastify/cors";
 import fastifyMultipart from '@fastify/multipart';
+import cookie, { FastifyCookieOptions } from '@fastify/cookie'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -18,6 +19,11 @@ app.register(fastifyMultipart, {
         fileSize: 10 * 1024 * 1024
     }
 });
+app.register(cookie, {
+    secret: "my-secret",
+    parseOptions: {}
+} as FastifyCookieOptions)
+
 app.register(fastifySwagger, {
     openapi: {
         info: {
