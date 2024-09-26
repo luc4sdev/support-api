@@ -4,12 +4,11 @@ import fs from 'fs';
 import path from 'path';
 
 
-const tmpDir = path.join(__dirname, '../', 'tmp');
-
+const tmpDir = env.IMAGE_DIRECTORY || path.join(__dirname, '../tmp/');
 
 if (!fs.existsSync(tmpDir)) {
     fs.mkdirSync(tmpDir, { recursive: true });
-    console.log('Pasta tmp criada na raiz do projeto.');
+    console.log(`Pasta ${tmpDir} criada.`);
 }
 
 app.listen({

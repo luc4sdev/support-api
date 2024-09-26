@@ -1,17 +1,13 @@
 import { ClientsRepository } from "@/repositories/clients-repository";
-import { Client } from "@prisma/client";
-import crypto from 'crypto';
 import path from 'path';
-import fs, { promises } from 'fs';
-import { pipeline } from 'node:stream'
-import { promisify } from "node:util";
+import { promises } from 'fs';
+import { env } from "../../../env";
 
-const pump = promisify(pipeline)
 export interface GetImageUseCaseRequest {
     id: string;
 }
 
-type GetImageUseCaseResponse = Buffer | null
+type GetImageUseCaseResponse = Buffer | null;
 
 export class GetImageUseCase {
 
@@ -20,17 +16,21 @@ export class GetImageUseCase {
     async execute({ id }: GetImageUseCaseRequest): Promise<GetImageUseCaseResponse> {
 
 
-
-        const client = await this.clientsRepository.findById(id)
+        const client = await this.clientsRepository.findById(id);
         if (!client) {
-            return null
+            return null;
         }
-        const imageName = client?.image
-        const imagePath = path.join(__dirname, '../../../../tmp/', imageName as string);
+
+
+        const imageName = client?.image;
+
+        const imageDirectory = env.IMAGE_DIRECTORY || path.join(__dirname, '../../../../tmp/');
+
+
+        const imagePath = path.join(imageDirectory, imageName as string);
+
         const imageBuffer = await promises.readFile(imagePath);
 
-        return imageBuffer
-
+        return imageBuffer;
     }
 }
-
