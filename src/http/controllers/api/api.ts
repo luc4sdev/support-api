@@ -76,13 +76,14 @@ export class ApiController {
     }
 
     public static async destroy(req: FastifyRequest, reply: FastifyReply) {
-        const token = req.cookies['token'];
-        if (!token) {
+        const { token } = req.body as { token: string };
+        const cleanedToken = token.replace(/^"(.*)"$/, '$1');
+        if (!cleanedToken) {
             return reply.status(401).send({ error: 'No token provided' });
         }
 
         try {
-            jwt.verify(token, process.env.JWT_SECRET as string);
+            jwt.verify(cleanedToken, process.env.JWT_SECRET as string);
         } catch (e) {
             return reply.status(401).send({ error: 'Invalid token' });
         }

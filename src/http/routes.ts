@@ -219,6 +219,9 @@ export async function appRoutes(app: FastifyInstance) {
             schema: {
                 tags: ['Auth'],
                 summary: 'Destroy Token',
+                body: z.object({
+                    token: z.string(),
+                }),
             },
         }, ApiController.destroy)
 }
