@@ -17,7 +17,7 @@ app.register(fastifyMultipart);
 app.register(fastifySwagger, {
     openapi: {
         info: {
-            title: 'Routers App',
+            title: 'Support App',
             description: 'Full-Stack App.',
             version: '1.0.0',
         }
@@ -30,7 +30,7 @@ app.register(fastifySwaggerUi, {
 })
 
 app.register(fastifyCors, {
-    origin: ['https://routers-app-eta.vercel.app', 'http://localhost:3000']
+    origin: ['https://support-app-neon.vercel.app', 'http://localhost:3000']
 })
 app.register(appRoutes)
 
