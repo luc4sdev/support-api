@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcrypt';
 
 export class ApiController {
 
@@ -47,7 +48,7 @@ export class ApiController {
                 return reply.status(404).send({ error: 'Invalid email or password' });
             }
 
-            if (user.password !== password) {
+            if (!(await bcrypt.compare(password, user.password))) {
                 return reply.status(404).send({ error: 'Invalid email or password' });
             }
 
