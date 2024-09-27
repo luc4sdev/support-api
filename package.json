@@ -9,7 +9,7 @@
     "start": "node build/server.js",
     "seed": "tsx prisma/seed.ts",
     "build:seed": "tsup prisma/seed.ts --format cjs --target node16 --out-dir build",
-    "start:seed": "node build/prisma/seed.js",
+    "start:seed": "node build/seed.js",
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "build": "tsup src --out-dir build",
