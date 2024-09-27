@@ -1,14 +1,14 @@
-## 💻 Routers App 
+## 💻 Support API 
 
-O projeto consiste em um back-end de uma aplicação de gerenciamento de clientes e roteadores. 
+O projeto consiste em um back-end de uma aplicação de suport para o gerenciamento de clientes. 
 
 O projeto foi desenvolvido com Typescript, NodeJS e Fastify.
 
-Para o banco de dados foi utilizada a ORM do Prisma e o Elasticsearch para aramazenar os dados, foi utilizado um container do Docker para fazer a instância do banco de dados.
+Para o banco de dados foi utilizada a ORM do Prisma, foi utilizado um container do Docker para fazer a instância do banco de dados.
 
-As rotas do Elasticsearch estão documentadas na API do Swagger, para fazer as requisições será necessário inserir o id do servidor, username e password nas variáveis de ambiente.
+Também foram realizados testes unitários e E2E e configurada sua execução no CI/CD para garantir a qualidade e robustez contínuas do código.
 
-Também foram realizados testes unitários e E2E e configurada sua execução no CI/CD para garantir a qualidade e robustez contínuas do código. Para os testes E2E funcionarem é preciso inserir as credenciais do Elasticsearch nas variáveis de ambiente.
+Foi realizada uma validação de autenticação com token JWT.
 
 Para a documentação da API foi utilizado o Swagger.
 
@@ -21,7 +21,7 @@ O deploy do back-end foi realizado no Render, onde a aplicação está funcional
 
 ## 📗 Link da documentação da API
 
-<h2>Link: <a href="https://api-node-3q8n.onrender.com/docs" target="_blank" rel="external">Documentação</a></h2>
+<h2>Link: <a href="https://support-api-3g2f.onrender.com/docs" target="_blank" rel="external">Documentação</a></h2>
 
 <br/>
 <br/>
@@ -65,10 +65,7 @@ Primeiramente crie um arquivo ```.env``` na raíz do projeto e adicione as segui
 NODE_ENV=dev
 PORT="3333"
 DATABASE_URL="postgresql://docker:docker@localhost:5432/nodeapi?schema=public"
-
-ELASTIC_CLOUD_ID=""
-ELASTIC_USERNAME=""
-ELASTIC_PASSWORD=""
+JWT_SECRET="secret"
 ```
 
 
@@ -76,10 +73,6 @@ Digite no terminal:
 
 ```
 npx prisma generate
-```
-
-```
-npm run elastic
 ```
 
 
@@ -150,23 +143,17 @@ pnpm run test:e2e
 <br/>
 
 ## Features
+### Auth
+
+- ✅ Token JWT para a autenticação.
+
 
 ### Clientes
 
-- ✅ Um cliente está ativo somente quando está vinculado a um roteador.
-- ✅ Um cliente está vinculado apenas a 1 roteador.
-- ✅ Quando um cliente é deletado e ele é o único cadastrado no roteador, o mesmo é colocado como inativo.
-- ✅ Não pode haver mais de um cliente com o mesmo CPF/CNPJ.
+- ✅ Não pode haver mais de um cliente com o mesmo email.
+- ✅ É possível deletar um cliente.
+- ✅ É possível editar.
 
-### Roteadores
-
-- ✅ Um roteador está ativo somente quando está vinculado a pelo menos um cliente.
-- ✅ Um roteador pode ter vários clientes cadastrados.
-- ✅ Quando um roteador é excluido, todos os clientes do mesmo são colocados como inativo.
-
-### Endereços
-
-- ✅ Um endereço pode ter vários clientes.
 
 
 <br/>
@@ -181,7 +168,6 @@ O projeto está desenvolvido utilizando as seguintes tecnologias:
 - NodeJS <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
 - Fastify <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastify/fastify-original.svg" />
 - Prisma <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg" />
-- Elasticsearch <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg" />
 - PostgreSQL <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" />
 - Docker <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" />
 - Vitest <img width="25px" height="25px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitest/vitest-original.svg" />
