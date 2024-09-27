@@ -83,6 +83,14 @@ docker compose up -d
 ```
 <br/>
 
+
+Para popular o banco de dados digite no terminal:
+
+```
+npm run seed
+```
+<br/>
+
 Para rodar o projeto digite no terminal:
 
 npm:
