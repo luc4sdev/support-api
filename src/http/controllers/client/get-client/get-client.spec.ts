@@ -14,17 +14,10 @@ describe('Get Client (e2e)', () => {
     it('should be able to get client', async () => {
 
         const data = await request(app.server).post('/client').send({
-            name: "John Doe",
-            type: "FISICA",
-            document: "123.123.123-12",
-            birthDate: "13/10/2002",
-            address: {
-                street: "street 3",
-                number: "11",
-                cep: "74000",
-                neighborhood: "bairro ABC",
-                city: "Goiânia",
-            }
+            name: 'John Doe',
+            email: 'johndoe@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
         const response = await request(app.server).get(`/client/${data.body.id}`).send()

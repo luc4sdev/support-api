@@ -13,49 +13,28 @@ describe('Create Client (e2e)', () => {
 
     it('should be able to create client', async () => {
         const response = await request(app.server).post('/client').send({
-            name: "John Doe",
-            type: "FISICA",
-            document: "123.123.123-12",
-            birthDate: "13-10-2002",
-            address: {
-                street: "street 3",
-                number: "11",
-                cep: "74000",
-                neighborhood: "bairro ABC",
-                city: "Goiânia",
-            }
+            name: 'John Doe',
+            email: 'johndoe@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
         expect(response.statusCode).toEqual(201)
     })
 
-    it('should not be able to create client with same document', async () => {
+    it('should not be able to create client with same email', async () => {
         await request(app.server).post('/client').send({
-            name: "John Doe",
-            type: "FISICA",
-            document: "71012312303",
-            birthDate: "13-10-2002",
-            address: {
-                street: "street 3",
-                number: "11",
-                cep: "74000",
-                neighborhood: "bairro ABC",
-                city: "Goiânia",
-            }
+            name: 'John Doe',
+            email: 'johndoe@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
         const response = await request(app.server).post('/client').send({
-            name: "John Doe 2",
-            type: "FISICA",
-            document: "71012312303",
-            birthDate: "11-12-1992",
-            address: {
-                street: "street 5",
-                number: "52",
-                cep: "74000",
-                neighborhood: "bairro ABC",
-                city: "Goiânia",
-            }
+            name: 'John Doe',
+            email: 'johndoe@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
         expect(response.statusCode).toEqual(409)

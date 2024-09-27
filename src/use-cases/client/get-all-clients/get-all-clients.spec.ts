@@ -14,34 +14,20 @@ describe('Get All Clients Use Case', () => {
 
         await clientsRepository.create({
             name: 'John Doe',
-            type: 'FISICA',
-            document: '70044410200',
-            birthDate: '12-02-1992',
-            address: {
-                street: 'Rua 1',
-                number: '12',
-                cep: '74000000',
-                neighborhood: 'Bairro ABC',
-                city: 'New York'
-            }
+            email: 'johndoe@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
         await clientsRepository.create({
             name: 'John Doe',
-            type: 'FISICA',
-            document: '70044410200',
-            birthDate: '12-02-1992',
-            address: {
-                street: 'Rua 1',
-                number: '12',
-                cep: '74000000',
-                neighborhood: 'Bairro ABC',
-                city: 'New York'
-            }
+            email: 'johndoe2@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
-        const clients = await sut.execute()
+        const clients = await sut.execute({ query: null, pageIndex: 0 })
 
-        expect(clients).length(2)
+        expect(clients.data).length(2)
     })
 })

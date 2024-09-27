@@ -1,6 +1,5 @@
 import { ClientsRepository } from "@/repositories/clients-repository";
 import { Client } from "@prisma/client";
-import crypto from 'crypto';
 
 export interface UploadImageUseCaseRequest {
     id: string;

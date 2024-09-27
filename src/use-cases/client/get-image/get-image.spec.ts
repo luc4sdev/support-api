@@ -1,16 +1,16 @@
 import { expect, describe, it } from 'vitest'
 import { InMemoryClientsRepository } from '@/repositories/in-memory/in-memory-clients-repository';
-import { GetClientUseCase } from './get-client';
+import { GetImageUseCase } from './get-image'
 
 let clientsRepository: InMemoryClientsRepository
-let sut: GetClientUseCase
+let sut: GetImageUseCase
 
-describe('Get Client Use Case', () => {
+describe('Get image Use Case', () => {
 
     clientsRepository = new InMemoryClientsRepository()
-    sut = new GetClientUseCase(clientsRepository)
+    sut = new GetImageUseCase(clientsRepository)
 
-    it('should be able to get client', async () => {
+    it('should be able to get image', async () => {
 
         const createdClient = await clientsRepository.create({
             name: 'John Doe',
@@ -19,8 +19,8 @@ describe('Get Client Use Case', () => {
             image: 'image.png'
         })
 
-        const client = await sut.execute({ clientId: createdClient.id })
+        const imageBuffer = await sut.execute({ id: createdClient.id })
 
-        expect(client.name).toEqual('John Doe')
+        expect(imageBuffer).toBe(null)
     })
 })

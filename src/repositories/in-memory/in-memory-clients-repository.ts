@@ -21,12 +21,13 @@ export class InMemoryClientsRepository implements ClientsRepository {
         return client
     }
 
-    async findMany(): Promise<Client[]> {
-        return this.items.filter(client => !client.deleted)
+    async findMany(): Promise<{ data: Client[], total: number }> {
+        const clients = this.items.filter(client => !client.deleted)
+        return { data: clients, total: clients.length }
     }
 
-    async findByDocument(document: string): Promise<Client | null> {
-        const client = this.items.find(item => item.document === document && item.deleted === false)
+    async findByEmail(document: string): Promise<Client | null> {
+        const client = this.items.find(item => item.email === document && item.deleted === false)
 
         if (!client) {
             return null
@@ -37,22 +38,18 @@ export class InMemoryClientsRepository implements ClientsRepository {
 
 
     async create(data: CreateClientUseCaseRequest) {
-        console.log(data)
+
         const client = {
             id: randomUUID(),
             name: data.name,
-            type: data.type,
-            document: data.document,
-            birthDate: data.birthDate,
-            address: data.address,
-            active: false,
+            email: data.email,
+            phone: data.phone as string,
+            image: data.image as string,
+            imageData: null,
             deleted: false,
-            addressId: randomUUID(),
-            routerId: randomUUID(),
             createdAt: new Date(),
             updatedAt: new Date()
         }
-
         this.items.push(client)
 
         return client

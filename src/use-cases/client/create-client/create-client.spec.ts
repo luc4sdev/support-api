@@ -14,16 +14,9 @@ describe('Create Client Use Case', () => {
 
         const { client } = await sut.execute({
             name: 'John Doe',
-            type: 'FISICA',
-            document: '70044410200',
-            birthDate: '12-02-1992',
-            address: {
-                street: 'Rua 1',
-                number: '12',
-                cep: '74000000',
-                neighborhood: 'Bairro ABC',
-                city: 'New York'
-            }
+            email: 'johndoe@email.com',
+            phone: '(99) 99999-9999',
+            image: 'image.png'
         })
 
         expect(client.id).toEqual(expect.any(String))
